@@ -11,22 +11,19 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.todoapp.data.TodoEntity
-import com.example.todoapp.domain.DatabaseRepository
 import com.example.todoapp.navigation.AppNavigator
-import org.koin.compose.koinInject
 
 class TodoListScreen : Screen {
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
-        val repository = koinInject<DatabaseRepository>()
-        val screenModel = rememberScreenModel { TodoListScreenModel(repository) }
+        val screenModel = koinScreenModel<TodoListScreenModel>()
         val navigator = LocalNavigator.currentOrThrow
         val todos by screenModel.todos.collectAsState()
         var showDialog by remember { mutableStateOf(false) }

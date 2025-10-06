@@ -32,6 +32,6 @@ val appModule = module {
     singleOf(::DatabaseRepositoryImpl).bind<DatabaseRepository>()
 
     // ScreenModels
-    factoryOf(::TodoListScreenModel)
-    factoryOf(::TodoDetailScreenModel)
+    factory { TodoListScreenModel(get()) }
+    factory { TodoDetailScreenModel(get()) }
 }

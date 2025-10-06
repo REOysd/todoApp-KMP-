@@ -9,15 +9,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import com.example.todoapp.domain.DatabaseRepository
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
-import org.koin.compose.koinInject
+import org.koin.core.parameter.parametersOf
 
 data class TodoDetailScreen(
     val todoId: Long
@@ -26,8 +25,7 @@ data class TodoDetailScreen(
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
-        val repository = koinInject<DatabaseRepository>()
-        val screenModel = rememberScreenModel { TodoDetailScreenModel(repository) }
+        val screenModel = koinScreenModel<TodoDetailScreenModel> { parametersOf(todoId) }
         val navigator = LocalNavigator.currentOrThrow
         val todo by screenModel.todo.collectAsState()
         val isDeleted by screenModel.isDeleted.collectAsState()
@@ -179,6 +177,8 @@ data class TodoDetailScreen(
         val instant = Instant.fromEpochMilliseconds(timestamp)
         val dateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
         return "${dateTime.year}年${dateTime.monthNumber}月${dateTime.dayOfMonth}日 " +
-                "${dateTime.hour.toString().padStart(2, '0')}:${dateTime.minute.toString().padStart(2, '0')}"
+                "${dateTime.hour.toString().padStart(2, '0')}:${
+                    dateTime.minute.toString().padStart(2, '0')
+                }"
     }
 }
