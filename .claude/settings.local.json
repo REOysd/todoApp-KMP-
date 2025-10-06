@@ -6,7 +6,8 @@
       "Bash(./gradlew:*)",
       "WebFetch(domain:medium.com)",
       "mcp__ide__getDiagnostics",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(timeout:*)"
     ],
     "deny": [],
     "ask": []
