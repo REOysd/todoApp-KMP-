@@ -1,7 +1,7 @@
-package com.example.todoapp.presentation
+package com.example.todoapp.presentation.todoList
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import cafe.adriel.voyager.core.model.ScreenModel
+import cafe.adriel.voyager.core.model.screenModelScope
 import com.example.todoapp.data.TodoEntity
 import com.example.todoapp.domain.DatabaseRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -9,9 +9,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class TodoViewModel(
+class TodoListScreenModel(
     private val repository: DatabaseRepository
-) : ViewModel() {
+) : ScreenModel {
 
     private val _todos = MutableStateFlow<List<TodoEntity>>(emptyList())
     val todos: StateFlow<List<TodoEntity>> = _todos.asStateFlow()
@@ -21,7 +21,7 @@ class TodoViewModel(
     }
 
     private fun loadTodos() {
-        viewModelScope.launch {
+        screenModelScope.launch {
             repository.getAll().collect { todoList ->
                 _todos.value = todoList
             }
@@ -31,7 +31,7 @@ class TodoViewModel(
     fun addTodo(title: String, description: String) {
         if (title.isBlank()) return
 
-        viewModelScope.launch {
+        screenModelScope.launch {
             val newTodo = TodoEntity(
                 title = title,
                 description = description
@@ -41,7 +41,7 @@ class TodoViewModel(
     }
 
     fun deleteTodo(todo: TodoEntity) {
-        viewModelScope.launch {
+        screenModelScope.launch {
             repository.delete(todo)
         }
     }

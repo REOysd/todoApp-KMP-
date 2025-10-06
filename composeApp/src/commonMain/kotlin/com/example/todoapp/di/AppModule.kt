@@ -4,9 +4,11 @@ import com.example.todoapp.data.AppDatabase
 import com.example.todoapp.data.DatabaseRepositoryImpl
 import com.example.todoapp.data.getRoomDatabase
 import com.example.todoapp.domain.DatabaseRepository
-import com.example.todoapp.presentation.TodoViewModel
+import com.example.todoapp.presentation.todoDetail.TodoDetailScreenModel
+import com.example.todoapp.presentation.todoList.TodoListScreenModel
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
+import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.bind
@@ -24,8 +26,12 @@ fun initKoin(config: KoinAppDeclaration? = null) =
     }
 
 val appModule = module {
+    // Database
     single { getRoomDatabase(get()) }
     single { get<AppDatabase>().getDao() }
     singleOf(::DatabaseRepositoryImpl).bind<DatabaseRepository>()
-    single { TodoViewModel(get()) }
+
+    // ScreenModels
+    factoryOf(::TodoListScreenModel)
+    factoryOf(::TodoDetailScreenModel)
 }
