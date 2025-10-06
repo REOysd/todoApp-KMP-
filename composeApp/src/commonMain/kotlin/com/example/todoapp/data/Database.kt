@@ -25,3 +25,5 @@ fun getRoomDatabase(builder: RoomDatabase.Builder<AppDatabase>): AppDatabase {
         .setQueryCoroutineContext(Dispatchers.IO)
         .build()
 }
+
+fun getDao(database: AppDatabase) = database.getDao()

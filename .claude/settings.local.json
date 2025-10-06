@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(./gradlew build:*)",
+      "Bash(./gradlew:*)",
+      "WebFetch(domain:medium.com)",
+      "mcp__ide__getDiagnostics",
+      "Bash(cat:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
