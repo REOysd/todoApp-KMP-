@@ -1,14 +1,13 @@
-package com.example.todoapp.Data
+package com.example.todoapp.data
 
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.todoapp.data.AppDatabase
 import kotlinx.cinterop.ExperimentalForeignApi
 import platform.Foundation.NSDocumentDirectory
 import platform.Foundation.NSFileManager
 import platform.Foundation.NSUserDomainMask
 
-fun getDatabaseBuilder(): RoomDatabase.Builder<AppDatabase> {
+fun databaseBuilder(): RoomDatabase.Builder<AppDatabase> {
     val dbFilePath = documentDirectory() + "/my_room.db"
     return Room.databaseBuilder<AppDatabase>(
         name = dbFilePath
