@@ -5,7 +5,6 @@ import com.example.todoapp.data.DatabaseRepositoryImpl
 import com.example.todoapp.data.getRoomDatabase
 import com.example.todoapp.domain.DatabaseRepository
 import com.example.todoapp.presentation.TodoViewModel
-import org.koin.compose.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.singleOf
@@ -28,5 +27,5 @@ val appModule = module {
     single { getRoomDatabase(get()) }
     single { get<AppDatabase>().getDao() }
     singleOf(::DatabaseRepositoryImpl).bind<DatabaseRepository>()
-    viewModel { TodoViewModel(get()) }
+    single { TodoViewModel(get()) }
 }

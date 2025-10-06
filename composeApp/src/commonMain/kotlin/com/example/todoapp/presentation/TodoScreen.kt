@@ -12,12 +12,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.todoapp.data.TodoEntity
-import org.koin.compose.viewmodel.koinViewModel
+import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TodoScreen(
-    viewModel: TodoViewModel = koinViewModel()
+    viewModel: TodoViewModel = koinInject()
 ) {
     val todos by viewModel.todos.collectAsState()
     var showDialog by remember { mutableStateOf(false) }
